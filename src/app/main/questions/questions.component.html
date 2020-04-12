@@ -43,4 +43,4 @@
     </ng-template>
 </p-table>
 
-<app-add-question [display]="displayAddNewQuesDiaglog"></app-add-question>
+<app-add-question (displayFlagEmitter)="displayFlagChangedOnClose($event)" [display]="displayAddNewQuesDiaglog"></app-add-question>

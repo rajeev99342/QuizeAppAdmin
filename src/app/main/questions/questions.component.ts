@@ -30,5 +30,9 @@ export class QuestionsComponent implements OnInit {
   {
       this.displayAddNewQuesDiaglog = true;
   }
+  displayFlagChangedOnClose(event)
+  {
+      this.displayAddNewQuesDiaglog = false;
+  }
 
 }

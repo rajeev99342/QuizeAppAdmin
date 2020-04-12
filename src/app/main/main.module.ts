@@ -23,6 +23,7 @@ import { TopicsComponent } from './topics/topics.component';
 import { AddQuestionComponent } from './questions/dialog-box/add-question/add-question.component';
 import {DialogModule} from 'primeng/dialog';
 import {EditorModule} from 'primeng/editor';
+import {RadioButtonModule} from 'primeng/radiobutton';
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import {EditorModule} from 'primeng/editor';
       DropdownModule,
       FormsModule,
       DialogModule,
-      EditorModule
+      EditorModule,
+      RadioButtonModule
       
     ],
     exports:[
@@ -65,7 +67,8 @@ import {EditorModule} from 'primeng/editor';
         DropdownModule,
         ButtonModule,
         FormsModule,
-        EditorModule
+        EditorModule,
+        RadioButtonModule
       ],
       schemas: [
         CUSTOM_ELEMENTS_SCHEMA,

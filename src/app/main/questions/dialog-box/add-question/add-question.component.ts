@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output,EventEmitter } from '@angular/core';
 import { SelectItem } from 'primeng/api/selectitem';
 
 @Component({
@@ -9,6 +9,7 @@ import { SelectItem } from 'primeng/api/selectitem';
 export class AddQuestionComponent implements OnInit {
 
   @Input() display : boolean;
+  @Output() displayFlagEmitter : EventEmitter<boolean> = new EventEmitter();
   text: string;
   cities1: SelectItem[];
     
@@ -17,6 +18,8 @@ export class AddQuestionComponent implements OnInit {
     selectedCity1: any;
     
     selectedCity2: any;
+
+    val1 : any;
   constructor() { }
 
   ngOnInit(): void {
@@ -34,5 +37,10 @@ export class AddQuestionComponent implements OnInit {
     console.log(this.selectedCity1)
   }
 
+  onHideDialog()
+  {
+      this.display = false;
+      this.displayFlagEmitter.emit(this.display);
+  }
 
 }
