@@ -1,0 +1,22 @@
+<p-dialog 
+[transitionOptions]="'0ms'"
+header="Title" 
+[baseZIndex]="10000"
+[(visible)]="display"
+modal= true
+styleClass="dialog"
+[style]="{width: '80vw',height:'70vw'}">
+  
+
+<p-editor [(ngModel)]="text" [style]="{'height':'15vw'}">
+    <p-header>
+        <p-dropdown  [options]="cities2" (click)="onSelectPurchaser()" [(ngModel)]="selectedCity1" placeholder="Select Subject" optionLabel="name" [showClear]="true"></p-dropdown>
+        <p-dropdown  [options]="cities2" (click)="onSelectPurchaser()" [(ngModel)]="selectedCity1" placeholder="Select Subject" optionLabel="name" [showClear]="true"></p-dropdown>
+        <ion-icon style="cursor: pointer;" class="float-right" (click)="text=null" name="close-outline"></ion-icon>
+
+    </p-header>
+</p-editor>
+
+
+
+</p-dialog>
