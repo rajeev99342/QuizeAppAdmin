@@ -19,6 +19,10 @@ import {ChartModule} from 'primeng/chart';
 import { PurchaserComponent } from './purchaser/purchaser.component';
 import {DropdownModule} from 'primeng/dropdown';
 import { FormsModule } from '@angular/forms';
+import { TopicsComponent } from './topics/topics.component';
+import { AddQuestionComponent } from './questions/dialog-box/add-question/add-question.component';
+import {DialogModule} from 'primeng/dialog';
+import {EditorModule} from 'primeng/editor';
 
 
 @NgModule({
@@ -30,7 +34,9 @@ import { FormsModule } from '@angular/forms';
         SchoolsComponent,
         QuizesComponent,
         AnalysisComponent,
-        PurchaserComponent
+        PurchaserComponent,
+        TopicsComponent,
+        AddQuestionComponent
     ],
     imports: [
       BrowserModule,
@@ -40,7 +46,9 @@ import { FormsModule } from '@angular/forms';
       ButtonModule,
       ChartModule,
       DropdownModule,
-      FormsModule
+      FormsModule,
+      DialogModule,
+      EditorModule
       
     ],
     exports:[
@@ -49,13 +57,15 @@ import { FormsModule } from '@angular/forms';
         QuizesComponent,
         UsersComponent,
         SubjectComponent,
+        TopicsComponent,
         ClassComponent,
         TableModule,
         ChartModule,
         HttpClientModule,
         DropdownModule,
         ButtonModule,
-        FormsModule
+        FormsModule,
+        EditorModule
       ],
       schemas: [
         CUSTOM_ELEMENTS_SCHEMA,

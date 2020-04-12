@@ -7,6 +7,7 @@ import { QuestionsComponent } from './main/questions/questions.component';
 import { QuizesComponent } from './main/quizes/quizes.component';
 import { AnalysisComponent } from './main/analysis/analysis.component';
 import { PurchaserComponent } from './main/purchaser/purchaser.component';
+import { TopicsComponent } from './main/topics/topics.component';
 
 
 const routes: Routes = [
@@ -42,6 +43,10 @@ const routes: Routes = [
   {
     path:'Home/Purchaser',
     component:PurchaserComponent
+  },
+  {
+    path:'Home/Topic',
+    component:TopicsComponent
   }
 
 ];

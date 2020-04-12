@@ -12,7 +12,7 @@
 
       </ul>
       <form class="form-inline my-2 my-lg-0">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Add</button>
+        <button (click)="addNewQues()" class="btn btn-outline-success my-2 my-sm-0" type="submit">Add</button>
       </form>
     </div>
   </nav>
@@ -42,3 +42,5 @@
         </tr>
     </ng-template>
 </p-table>
+
+<app-add-question [display]="displayAddNewQuesDiaglog"></app-add-question>

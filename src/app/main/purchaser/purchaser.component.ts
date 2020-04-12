@@ -49,11 +49,11 @@ this.cities1 = [
 
 //An array of cities
 this.cities2 = [
-  {name: 'New York', code: 'NY'},
-  {name: 'Rome', code: 'RM'},
-  {name: 'London', code: 'LDN'},
-  {name: 'Istanbul', code: 'IST'},
-  {name: 'Paris', code: 'PRS'}
+  {name: 'Coaching', code: 'NY'},
+  {name: 'School', code: 'RM'},
+  {name: 'Collage', code: 'RM2'},
+
+ 
 ];
   }
 

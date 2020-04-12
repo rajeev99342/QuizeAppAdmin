@@ -9,6 +9,7 @@ import { HttpClient } from '@angular/common/http';
 export class QuestionsComponent implements OnInit {
   cars: any[];
   cols: any[];
+  displayAddNewQuesDiaglog : boolean = false;
   constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
@@ -23,6 +24,11 @@ export class QuestionsComponent implements OnInit {
     { field: 'Join', header: 'Join Date' },
     { field: 'Status', header: 'Status' }
 ];
+  }
+
+  addNewQues()
+  {
+      this.displayAddNewQuesDiaglog = true;
   }
 
 }
