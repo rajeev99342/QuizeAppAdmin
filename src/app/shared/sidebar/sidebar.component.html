@@ -1,0 +1,15 @@
+<p-sidebar (onHide)="onHideEvent($event)" [(visible)]="display">
+
+
+        <a class="dropdown-item" (click)="onHideEvent($event)" routerLink="/Home/Users">Users</a>
+
+        <a class="dropdown-item" (click)="onHideEvent($event)" routerLink="/Home/Classes">Classes</a>
+        <a class="dropdown-item" (click)="onHideEvent($event)" routerLink="/Home/Subjects" >Subjects</a>
+        <a class="dropdown-item" (click)="onHideEvent($event)" routerLink="/Home/Questions">Questions</a>
+        <a class="dropdown-item" (click)="onHideEvent($event)" routerLink="/Home/Quize">Quize</a>
+        <a class="dropdown-item" (click)="onHideEvent($event)" routerLink="/Home/Purchaser">Purchaser</a>
+
+        <!-- <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="#">Something else here</a> -->
+     
+</p-sidebar>

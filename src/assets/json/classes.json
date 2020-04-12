@@ -1,0 +1,14 @@
+{
+    "data" :[
+        {"Class": "Volkswagen", "Subject": 2012, "User": "White", "Dummy": "dsad231ff"},
+        {"Class": "Audi", "Subject": 2011, "User": "Black", "Dummy": "gwregre345"},
+        {"Class": "Renault", "Subject": 2005, "User": "Gray", "Dummy": "h354htr"},
+        {"Class": "BMW", "Subject": 2003, "User": "Blue", "Dummy": "j6w54qgh"},
+        {"Class": "Mercedes", "Subject": 1995, "User": "White", "Dummy": "hrtwy34"},
+        {"Class": "Volvo", "Subject": 2005, "User": "Black", "Dummy": "jejtyj"},
+        {"Class": "Honda", "Subject": 2012, "User": "Yellow", "Dummy": "g43gr"},
+        {"Class": "Jaguar", "Subject": 2013, "User": "White", "Dummy": "greg34"},
+        {"Class": "Ford", "Subject": 2000, "User": "Black", "Dummy": "h54hw5"},
+        {"Class": "Fiat", "Subject": 2013, "User": "Red", "Dummy": "245t2s"}
+    ]
+}
