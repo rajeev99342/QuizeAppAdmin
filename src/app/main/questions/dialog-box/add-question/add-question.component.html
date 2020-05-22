@@ -1,30 +1,116 @@
-<p-dialog 
-[transitionOptions]="'0ms'"
-header="Title" 
-[baseZIndex]="10000"
-[(visible)]="display"
-modal= true
-styleClass="dialog"
-(onHide)="onHideDialog()"
-[style]="{width: '80vw',height:'70vw'}">
-  
+<p-dialog [transitionOptions]="'0ms'" header="Title" [baseZIndex]="10000" [(visible)]="display" modal=true
+    styleClass="dialog" (onHide)="onHideDialog()" [style]="{width: '80vw'}">
 
-<p-editor [(ngModel)]="text" [style]="{'height':'15vw'}">
-    <p-header>
-        <p-dropdown  [options]="cities2" (click)="onSelectPurchaser()" [(ngModel)]="selectedCity1" placeholder="Select Subject" optionLabel="name" [showClear]="true"></p-dropdown>
-        <p-dropdown  [options]="cities2" (click)="onSelectPurchaser()" [(ngModel)]="selectedCity1" placeholder="Select Subject" optionLabel="name" [showClear]="true"></p-dropdown>
-        <p-dropdown  [options]="cities2" (click)="onSelectPurchaser()" [(ngModel)]="selectedCity1" placeholder="Select Subject" optionLabel="name" [showClear]="true"></p-dropdown>
 
-        <!-- <ion-icon style="cursor: pointer;" class="float-right" (click)="text=null" name="close-outline"></ion-icon> -->
+    <div class="row">
+        <div style="box-shadow: 1px 3px 2px 0px #e0dcdc;overflow: auto;height: 32rem;" class="col-sm-8">
+            <p-editor [(ngModel)]="txtQuestion" [style]="{'height':'15vw'}">
+                <p-header>
+                    <p-dropdown [options]="subjectList" (click)="onSelectSubject()" [(ngModel)]="selectedSubject"
+                        placeholder="Select Subject" optionLabel="name" [showClear]="true"></p-dropdown>
+                    <p-dropdown [options]="filteredTopics" (click)="onSelectTopic()" [(ngModel)]="selectedTopic"
+                        placeholder="Select Topic" optionLabel="name" [showClear]="true"></p-dropdown>
+                    <!-- <p-dropdown [options]="cities2" (click)="onSelectPurchaser()" [(ngModel)]="selectedCity1"
+                        placeholder="Select Subject" optionLabel="name" [showClear]="true"></p-dropdown> -->
 
-    </p-header>
-</p-editor>
 
-<h3 class="first">Basic</h3>
-<div class="ui-g" style="width:250px;margin-bottom:10px">
-    <div class="ui-g-12"><p-radioButton name="group1" value="Option 1" label="Option 1" [(ngModel)]="val1" inputId="opt1"></p-radioButton></div>
-    <div class="ui-g-12"><p-radioButton name="group1" value="Option 2" label="Option 2" [(ngModel)]="val1" inputId="opt2"></p-radioButton></div>
-    <div class="ui-g-12"><p-radioButton name="group1" value="Option 3" label="Option 3" [(ngModel)]="val1" inputId="opt3"></p-radioButton></div>
-</div>
+                </p-header>
+            </p-editor>
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="input-group input-group-sm mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-sm">A</span>
+                        </div>
+                        <input [(ngModel)]="optionA" type="text" class="form-control" aria-label="Small"
+                            aria-describedby="inputGroup-sizing-sm">
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="input-group input-group-sm mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-sm">B</span>
+                        </div>
+                        <input [(ngModel)]="optionB" type="text" class="form-control" aria-label="Small"
+                            aria-describedby="inputGroup-sizing-sm">
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="input-group input-group-sm mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-sm">C</span>
+                        </div>
+                        <input [(ngModel)]="optionC" type="text" class="form-control" aria-label="Small"
+                            aria-describedby="inputGroup-sizing-sm">
+                    </div>
+                </div>
+                <div class="col-sm-3">
+
+                    <div class="input-group input-group-sm mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-sm">D</span>
+                        </div>
+                        <input [(ngModel)]="optionD" type="text" class="form-control" aria-label="Small"
+                            aria-describedby="inputGroup-sizing-sm">
+                    </div>
+                </div>
+            </div>
+
+
+
+            <p1 class="first">correct option</p1>
+            <div class="ui-g" style="width:250px;margin-bottom:10px">
+                <div class="ui-g-3">
+                    <p-radioButton name="group1" value="A" label="A" [(ngModel)]="val1" inputId="opt1"></p-radioButton>
+                </div>
+                <div class="ui-g-3">
+                    <p-radioButton name="group1" value="B" label="B" [(ngModel)]="val1" inputId="opt2"></p-radioButton>
+                </div>
+                <div class="ui-g-3">
+                    <p-radioButton name="group1" value="C" label="C" [(ngModel)]="val1" inputId="opt3"></p-radioButton>
+                </div>
+                <div class="ui-g-3">
+                    <p-radioButton name="group1" value="D" label="D" [(ngModel)]="val1" inputId="opt3"></p-radioButton>
+                </div>
+
+            </div>
+            <div class="row">
+                <!-- <p-fileUpload name="myfile[]" url="./upload.php"  (onUpload)="onUpload($event)"  multiple="multiple"></p-fileUpload> -->
+
+                <form [formGroup]="myForm">
+
+
+                    <div class="form-group">
+                        <label for="file">File</label>
+                        <input formControlName="file" id="file" type="file" class="form-control" multiple=""
+                            (change)="onFileChange($event)">
+                        <div *ngIf="f.file.touched && f.file.invalid" class="alert alert-danger">
+                            <div *ngIf="f.file.errors.required">File is required.</div>
+                        </div>
+                    </div>
+
+
+                </form>
+    
+            </div>
+            <div class="row">
+                <div *ngFor='let url of images' class="img-wrap"  class="col-3">
+                    <span (click)="deleteImage(url)" class="close">&times;</span>
+                    <img  class="close"  [src]="url" height="100px" width="100px" > 
+
+                </div>
+
+            </div>
+            <button type="button" (click)="onSave()" class="btn btn-secondary btn-lg">Large button</button>
+
+        </div>
+
+
+        <div style="box-shadow: 4px 2px 2px 1px #eaeaea" class="col-sm-4">
+
+        </div>
+    </div>
+
+
 
 </p-dialog>

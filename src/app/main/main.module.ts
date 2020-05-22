@@ -18,12 +18,15 @@ import { AnalysisComponent } from './analysis/analysis.component';
 import {ChartModule} from 'primeng/chart';
 import { PurchaserComponent } from './purchaser/purchaser.component';
 import {DropdownModule} from 'primeng/dropdown';
-import { FormsModule } from '@angular/forms';
+import { FormsModule ,ReactiveFormsModule} from '@angular/forms';
 import { TopicsComponent } from './topics/topics.component';
 import { AddQuestionComponent } from './questions/dialog-box/add-question/add-question.component';
 import {DialogModule} from 'primeng/dialog';
 import {EditorModule} from 'primeng/editor';
 import {RadioButtonModule} from 'primeng/radiobutton';
+import {FileUploadModule} from 'primeng/fileupload';
+import { QuestionLevel } from './Constant/QuestionLevel';
+import {MultiSelectModule} from 'primeng/multiselect';
 
 
 @NgModule({
@@ -50,8 +53,10 @@ import {RadioButtonModule} from 'primeng/radiobutton';
       FormsModule,
       DialogModule,
       EditorModule,
-      RadioButtonModule
-      
+      RadioButtonModule,
+      FileUploadModule,
+      ReactiveFormsModule,
+      MultiSelectModule
     ],
     exports:[
         QuestionsComponent,
@@ -68,13 +73,15 @@ import {RadioButtonModule} from 'primeng/radiobutton';
         ButtonModule,
         FormsModule,
         EditorModule,
-        RadioButtonModule
+        RadioButtonModule,
+        FileUploadModule,
+        ReactiveFormsModule
       ],
       schemas: [
         CUSTOM_ELEMENTS_SCHEMA,
         NO_ERRORS_SCHEMA
       ],
-    providers: [UserServiceService],
+    providers: [UserServiceService,QuestionLevel],
     bootstrap: []
   })
   export class MainModule { }
