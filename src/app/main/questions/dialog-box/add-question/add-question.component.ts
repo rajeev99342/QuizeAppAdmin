@@ -27,15 +27,15 @@ export class AddQuestionComponent implements OnInit,OnChanges {
 
     cities2: any[];
 
-    selectedSubject: any;
+    // selectedSubject: any;
     
-    selectedTopic: any;
-    optionA : any;
-    optionB : any;
-    optionC : any;
-    optionD : any;
-    val1 : any;
-    txtQuestion : string;
+    // selectedTopic: any;
+    // optionA : any;
+    // optionB : any;
+    // optionC : any;
+    // optionD : any;
+    // val1 : any;
+    // txtQuestion : string;
     subjectList: any[]=[];
     topicList :any[]=[];
     filteredTopics : any[]=[];
@@ -43,12 +43,22 @@ export class AddQuestionComponent implements OnInit,OnChanges {
     user : UserModel;
     myfile : any[]=[];
     isEdit : boolean = false;
+    isNewImage : boolean = false;
     imageList : DgrmImageInfoModel[]=[];
     dgrms : any[]=[];
     images = [];
     myForm = new FormGroup({
-     file: new FormControl('', [Validators.required]),
-     fileSource: new FormControl('', [Validators.required])
+     file: new FormControl('', null),
+     fileSource: new FormControl('', [Validators.required]),
+     selectedSubject: new FormControl('', [Validators.required]),
+     selectedTopic: new FormControl('', [Validators.required]),
+     optionA: new FormControl('', [Validators.required]),
+     optionB: new FormControl('', [Validators.required]),
+     optionC: new FormControl('', [Validators.required]),
+     optionD: new FormControl('', [Validators.required]),
+     txtQuestion: new FormControl('', [Validators.required]),
+     val1: new FormControl('', [Validators.required]),
+   
    });
   constructor(public level : QuestionLevel, private questService : QuestionService) { }
 
@@ -69,7 +79,7 @@ export class AddQuestionComponent implements OnInit,OnChanges {
     setTimeout(() => {
       if(this.display && this.questModel != null)
       {
-        this.updateEditQuestModel();
+        this.buildFormModel();
       }else{
           this.isEdit = false;
       }
@@ -78,83 +88,88 @@ export class AddQuestionComponent implements OnInit,OnChanges {
     }, 200);
   }
   
-  updateEditQuestModel()
+  buildFormModel()
   {
+      this.isNewImage = false;
       this.isEdit = true;
-      this.txtQuestion = this.questModel.txtQuesInfoModel.quesTxt;
-      this.optionA = this.questModel.ki_kidder_quest_optionA;
-      this.optionB = this.questModel.ki_kidder_quest_optionB;
-      this.optionC = this.questModel.ki_kidder_quest_optionC;
-      this.optionD = this.questModel.ki_kidder_quest_optionD;
+      this.myForm.controls.txtQuestion.setValue(this.questModel.txtQuesInfoModel.quesTxt);
+      this.myForm.controls.optionA.setValue(this.questModel.ki_kidder_quest_optionA);
+      this.myForm.controls.optionB.setValue(this.questModel.ki_kidder_quest_optionB);
+
+      this.myForm.controls.optionC.setValue(this.questModel.ki_kidder_quest_optionC);
+      this.myForm.controls.optionD.setValue(this.questModel.ki_kidder_quest_optionD);
      
-      this.selectedSubject = {};
+      let selectedSubject : any = {};
 
       for(let k=0;k<this.subjectList.length;k++)
       {
           if(this.subjectList[k].name == this.questModel.ki_kidder_quest_sub)
           {
-              this.selectedSubject.name = this.subjectList[k].name;
-              this.selectedSubject.code = this.subjectList[k].code;
-              this.selectedSubject.id = this.subjectList[k].id;
+              selectedSubject.name = this.subjectList[k].name;
+              selectedSubject.code = this.subjectList[k].code;
+              selectedSubject.id = this.subjectList[k].id;
+              this.myForm.controls.selectedSubject.setValue(selectedSubject);
+
               break;
           }
       }
-      this.selectedTopic = {};
+      let selectedTopic : any = {};
 
       for(let k=0;k<this.topicList.length;k++)
       {
           if(this.topicList[k].name == this.questModel.ki_kidder_quest_topic)
           {
-              this.selectedTopic.name = this.topicList[k].name;
-              this.selectedTopic.scode = this.topicList[k].scode;
-              this.selectedTopic.id = this.topicList[k].id;
-
+              selectedTopic.name = this.topicList[k].name;
+              selectedTopic.scode = this.topicList[k].scode;
+              selectedTopic.id = this.topicList[k].id;
+              this.myForm.controls.selectedTopic.setValue(selectedTopic);
               break;
           }
       }
-      this.filteredTopics = this.topicList.filter((topic=> topic.scode == this.selectedSubject.code));
+      this.filteredTopics = this.topicList.filter((topic=> topic.scode == selectedSubject.code));
 
       if(this.questModel.ki_kidder_quest_optionA == this.questModel.ki_kidder_quest_ans)
       {
-          this.val1 = "A";
+          this.myForm.controls.val1.setValue("A");
       }else if(this.questModel.ki_kidder_quest_optionB == this.questModel.ki_kidder_quest_ans)
       {
-          this.val1 = "B";
+        this.myForm.controls.val1.setValue("B");
       }else if(this.questModel.ki_kidder_quest_optionC == this.questModel.ki_kidder_quest_ans)
       {
-          this.val1 = "C";
+        this.myForm.controls.val1.setValue("C");
       }else if(this.questModel.ki_kidder_quest_optionD == this.questModel.ki_kidder_quest_ans)
       {
-          this.val1 = "D";
+        this.myForm.controls.val1.setValue("D");
       }
 
       this.images = [];
       this.imageList = [];
+      
+      // this.myForm.controls.file.setValue('/fake/path');
       this.questModel.dgrmImageInfoModels.forEach(element => {
         this.images.push(element.dgrm_img_base64);
         this.imageList.push(element);
-        this.myForm.controls.fileSource.value.push(element.dgrm_img_base64);
-        this.myForm.setValidators(Validators.required);
         
       });
 
+      this.myForm.controls.fileSource.setValue([this.imageList]);
 
   }
 
 
   onSelectSubject()
   {
-    console.log(this.selectedSubject)
-    if(this.selectedSubject)
+   
+    if(this.myForm.controls.selectedSubject.value)
     {
-      this.filteredTopics = this.topicList.filter((topic=> topic.scode == this.selectedSubject.code));
+      this.filteredTopics = this.topicList.filter((topic=> topic.scode == this.myForm.controls.selectedSubject.value.code));
 
     }
     console.log(this.topicList)
   }
 
   onSelectTopic(){
-      console.log(this.selectedTopic);
+      
   }
 
   onHideDialog()
@@ -162,20 +177,13 @@ export class AddQuestionComponent implements OnInit,OnChanges {
       this.display = false;
       this.clearQuestForm();
       this.displayFlagEmitter.emit(this.display);
+      // this.questModel = null;
+      this.images = [];
   }
 
   clearQuestForm()
   {
-    this.selectedSubject = null;
-    this.selectedTopic = null;
-    this.txtQuestion = null;
-    this.optionA = null;
-    this.optionB = null;
-    this.optionC = null;
-    this.optionD = null;
-    this.selectedSubject = null;
-    this.selectedTopic = null;
-    this.images = [];
+    this.myForm.reset();
 
   }
 
@@ -192,7 +200,15 @@ export class AddQuestionComponent implements OnInit,OnChanges {
 }
 
     onFileChange(event) {
-      if (event.target.files && event.target.files[0]) {
+
+ 
+
+      if(this.isEdit && this.images.length != 0)
+      {
+          return ;
+      }else{
+
+        if (event.target.files && event.target.files[0]) {
           var filesAmount = event.target.files.length;
           for (let i = 0; i < filesAmount; i++) {
                   var reader = new FileReader();
@@ -209,6 +225,8 @@ export class AddQuestionComponent implements OnInit,OnChanges {
          
           }
       }
+      }
+
     }
     get f(){
       return this.myForm.controls;
@@ -216,101 +234,166 @@ export class AddQuestionComponent implements OnInit,OnChanges {
 
 
     onSave(){
-      if(!this.txtQuestion)
+
+      console.log('FFFFFF',this.myForm.controls)
+
+      if(!this.myForm.valid)
       {
           return;
-      }
-      let kidderQuestion : KidderQuestionModel = new KidderQuestionModel();
-      let question :  KiKidderQuestModel = new KiKidderQuestModel();
-      let txt : TxtQuesInfoModel = new TxtQuesInfoModel();
-      txt.quesTxt = this.txtQuestion;
-      this.user = new UserModel();
-      this.user.user_name = "Sonu";
-      this.user.user_password="sonu@123";
-      this.user.user_username="Sonu";
-      question.txtQuesInfoModel = txt;
-      question.userModel = this.user;
+      }else{
 
-      if(this.val1 == "A")
-      {
-        question.ki_kidder_quest_ans = this.optionA;
 
-      }else if(this.val1 == "B")
-      {
-          question.ki_kidder_quest_ans = this.optionB
-      }else if(this.val1 == "C")
-      {
-          question.ki_kidder_quest_ans = this.optionC
-      }else if(this.val1 == "D")
-      {
-          question.ki_kidder_quest_ans = this.optionD;
-      }
+  
+       
+        let kidderQuestion : KidderQuestionModel = new KidderQuestionModel();
+        let question :  KiKidderQuestModel = new KiKidderQuestModel();
+        let txtQuestModel : TxtQuesInfoModel = new TxtQuesInfoModel();
+        txtQuestModel.quesTxt = this.myForm.controls.txtQuestion.value;
+        this.user = new UserModel();
+        this.user.user_name = "Sonu";
+        this.user.user_password="sonu@123";
+        this.user.user_username="Sonu";
+        if(this.isEdit)
+        {
+              txtQuestModel.uniqueCode = this.questModel.txtQuesInfoModel.uniqueCode;
+              question.uniqueCode = this.questModel.uniqueCode;
+        }
+        question.txtQuesInfoModel = txtQuestModel;
+        question.userModel = this.user;
+  
+        if(this.myForm.controls.val1.value == "A")
+        {
+          question.ki_kidder_quest_ans = this.myForm.controls.optionA.value;
+  
+        }else if(this.myForm.controls.val1.value == "B")
+        {
+            question.ki_kidder_quest_ans = this.myForm.controls.optionB.value
+        }else if(this.myForm.controls.val1.value == "C")
+        {
+            question.ki_kidder_quest_ans = this.myForm.controls.optionC.value
+        }else if(this.myForm.controls.val1.value == "D")
+        {
+            question.ki_kidder_quest_ans = this.myForm.controls.optionD.value;
+        }
+  
+        question.ki_kidder_quest_marks = 50;
+        question.ki_kidder_quest_name = "dummy";
+        question.ki_kidder_quest_optionA = this.myForm.controls.optionA.value;
+        question.ki_kidder_quest_optionB = this.myForm.controls.optionB.value;
+        question.ki_kidder_quest_optionC = this.myForm.controls.optionC.value;
+        question.ki_kidder_quest_optionD = this.myForm.controls.optionD.value;
+        question.ki_kidder_quest_level = QuestionLevel.EASY;
+        question.ki_kidder_quest_sub = this.myForm.controls.selectedSubject.value.name;
+        question.ki_kidder_quest_topic = this.myForm.controls.selectedTopic.value.name;
+         this.dgrms = [];
 
-      question.ki_kidder_quest_marks = 50;
-      question.ki_kidder_quest_name = "dummy";
-      question.ki_kidder_quest_optionA = this.optionA;
-      question.ki_kidder_quest_optionB = this.optionB;
-      question.ki_kidder_quest_optionC = this.optionC;
-      question.ki_kidder_quest_optionD = this.optionD;
-      question.ki_kidder_quest_level = QuestionLevel.EASY;
-      question.ki_kidder_quest_sub = this.selectedSubject.name;
-      question.ki_kidder_quest_topic = this.selectedTopic.name;
-       let dgrm : DgrmImageInfoModel = new DgrmImageInfoModel();
-       this.dgrms = [];
-      if(this.myForm.valid)
-      {
-        let index = 0;
-        this.myForm.controls.fileSource.value.forEach(element => {
-            dgrm.dgrm_img_base64 = element;
-            dgrm.dgrm_img_name = this.imageNames[index];
-            index++;
-            this.dgrms.push(dgrm);
-        });
-      }
-
-      question.dgrmImageInfoModels = this.dgrms;
-
-      if(this.isEdit)
-      {
-        this.dgrms = [];
-          question.dgrmImageInfoModels.forEach(element => {
+        if(this.isEdit && this.isNewImage)
+        {
+          let index = 0;
+          this.myForm.controls.fileSource.value.forEach(element => {
             let dgrm : DgrmImageInfoModel = new DgrmImageInfoModel();
 
-            dgrm.dgrm_img_base64 = element.dgrm_img_base64;
-            dgrm.dgrm_img_name = element.dgrm_img_name;
-            dgrm.dgrm_img_path = element.dgrm_img_path;
-            dgrm.toBeDeleted = false;
-            dgrm.dgrm_img_id = element.dgrm_img_id;
-            this.dgrms.push(dgrm);
+              dgrm.dgrm_img_base64 = element;
+              dgrm.dgrm_img_name = this.imageNames[index];
+              dgrm.toBeDeleted = false;
+              index++;
+              this.dgrms.push(dgrm);
           });
-
+  
+            this.questModel.dgrmImageInfoModels.forEach(element => {
+              let dgrm : DgrmImageInfoModel = new DgrmImageInfoModel();
+              dgrm.dgrm_img_base64 = element.dgrm_img_base64;
+              dgrm.dgrm_img_name = element.dgrm_img_name;
+              dgrm.dgrm_img_path = element.dgrm_img_path;
+              dgrm.toBeDeleted = true;
+              dgrm.uniqueCode = element.uniqueCode;
+              dgrm.dgrm_img_id = element.dgrm_img_id;
+              this.dgrms.push(dgrm);
+            });
+        }else if(this.isEdit && !this.isNewImage)
+        {
+ 
           this.questModel.dgrmImageInfoModels.forEach(element => {
             let dgrm : DgrmImageInfoModel = new DgrmImageInfoModel();
 
             dgrm.dgrm_img_base64 = element.dgrm_img_base64;
             dgrm.dgrm_img_name = element.dgrm_img_name;
             dgrm.dgrm_img_path = element.dgrm_img_path;
-            dgrm.toBeDeleted = true;
+            dgrm.toBeDeleted = false;
+            dgrm.uniqueCode = element.uniqueCode;
             dgrm.dgrm_img_id = element.dgrm_img_id;
             this.dgrms.push(dgrm);
           });
+        }else if(this.isEdit == false)
+        {
+          let index = 0;
+          this.myForm.controls.fileSource.value.forEach(element => {
+            let dgrm : DgrmImageInfoModel = new DgrmImageInfoModel();
+
+              dgrm.dgrm_img_base64 = element;
+              dgrm.dgrm_img_name = this.imageNames[index];
+              dgrm.toBeDeleted = false;
+              index++;
+              this.dgrms.push(dgrm);
+          });
+        }
+        question.dgrmImageInfoModels = this.dgrms;
+
+        this.questService.saveQuestion(question).subscribe((res : KiKidderQuestModel)=>{
+            console.log(res);
+            this.isNewImage = false;
+            this.clearFormExceptSubjectAndTopic();
+            this.displayFlagEmitter.emit(false)
+            
+        })
       }
 
-     
-      this.questService.saveQuestion(question).subscribe((res : KiKidderQuestModel)=>{
-          console.log(res);
-      })
       
     }
 
     deleteImage(url)
     {
+        this.isNewImage = true;
         let index = this.images.indexOf(url);
         this.images.splice(index,1);
-        if(this.images.length == 0)
+      
+    }
+
+   get isDisable()
+    {
+        if(this.images.length != 0 && this.isEdit)
         {
-            this.myForm.controls.fileSource.value.push([]);
+          return true;
+        }else if(this.images.length == 0 && this.isEdit){
+          return false
         }
+    }
+    deleteImages()
+    {
+      this.imageNames = [];
+      this.isNewImage = true;
+        this.myForm.controls.file.reset();
+        this.myForm.controls.fileSource.reset();
+        this.images = [];
+    }
+
+    clearFormExceptSubjectAndTopic()
+    {
+      this.myForm.controls.txtQuestion.reset();
+      this.myForm.controls.optionA.reset();
+      this.myForm.controls.optionB.setValue(null);
+      this.myForm.controls.optionA.reset();
+      this.myForm.controls.optionC.reset();
+      this.myForm.controls.optionD.reset();
+      this.myForm.controls.val1.reset();
+      this.myForm.controls.file.reset();
+  
+
+      this.myForm.controls.fileSource.reset();
+
+
+      this.images = [];
+
     }
 
 }
